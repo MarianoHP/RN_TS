@@ -1,115 +1,144 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import 'react-native-gesture-handler';
 
- import React from 'react';
- import {
-   SafeAreaView,
-   ScrollView,
-   StatusBar,
-   StyleSheet,
-   Text,
-   useColorScheme,
-   View,
- } from 'react-native';
+import * as React from 'react';
+import {PixelRatio} from 'react-native';
 
- import {
-   Colors,
-   DebugInstructions,
-   Header,
-   LearnMoreLinks,
-   ReloadInstructions,
- } from 'react-native/Libraries/NewAppScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
- const Section: React.FC<{
-   title: string;
- }> = ({children, title}) => {
-   const isDarkMode = useColorScheme() === 'dark';
-   return (
-     <View style={styles.sectionContainer}>
-       <Text
-         style={[
-           styles.sectionTitle,
-           {
-             color: isDarkMode ? Colors.white : Colors.black,
-           },
-         ]}>
-         {title}
-       </Text>
-       <Text
-         style={[
-           styles.sectionDescription,
-           {
-             color: isDarkMode ? Colors.light : Colors.dark,
-           },
-         ]}>
-         {children}
-       </Text>
-     </View>
-   );
- };
+import HomeScreen from './src/presentation/screens/HomeScreen';
+import ExploreScreen from './src/presentation/screens/ExploreScreen';
+import SettingScreen from './src/presentation/screens/SettingScreen';
+import ProfileScreen from './src/presentation/screens/ProfileScreen';
+import RandomScreen from './src/presentation/screens/RandomScreen';
 
- const App = () => {
-   const isDarkMode = useColorScheme() === 'dark';
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+const topTab = createMaterialTopTabNavigator();
 
-   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-   };
+const HomeScreenStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Screen name="BottomTabStack" component={BottomTabStack} options={{headerShown: false}} />
+      <Stack.Screen
+        name="TopTabStack"
+        component={TopTabStack}
+        options={{
+          headerTitle: 'Top Tap Example',
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="RandomScreen"
+        component={RandomScreen}
+        options={{
+          headerTitle: 'Top Tap Example',
+          headerShown: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
-   return (
-     <SafeAreaView style={backgroundStyle}>
-       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-       <ScrollView
-         contentInsetAdjustmentBehavior="automatic"
-         style={backgroundStyle}>
-         <Header />
-         <View
-           style={{
-             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-           }}>
-           <Section title="Step One">
-             Edit <Text style={styles.highlight}>App.js</Text> to change this
-             screen and then come back to see your edits.
-           </Section>
-           <Section title="See Your Changes">
-             <ReloadInstructions />
-           </Section>
-           <Section title="Debug">
-             <DebugInstructions />
-           </Section>
-           <Section title="Learn More">
-             Read the docs to discover what to do next:
-           </Section>
-           <LearnMoreLinks />
-         </View>
-       </ScrollView>
-     </SafeAreaView>
-   );
- };
+const SettingScreenStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="SettingScreen">
+      <Stack.Screen name="SettingScreen" component={SettingScreen} options={{headerShown: false}} />
+    </Stack.Navigator>
+  );
+};
 
- const styles = StyleSheet.create({
-   sectionContainer: {
-     marginTop: 32,
-     paddingHorizontal: 24,
-   },
-   sectionTitle: {
-     fontSize: 24,
-     fontWeight: '600',
-   },
-   sectionDescription: {
-     marginTop: 8,
-     fontSize: 18,
-     fontWeight: '400',
-   },
-   highlight: {
-     fontWeight: '700',
-   },
- });
+const TopTabStack = () => {
+  return (
+    <topTab.Navigator initialRouteName="ProfileScreen">
+      <topTab.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Home Screen',
+        }}
+      />
+      <topTab.Screen
+        name="ExploreScreen"
+        component={ExploreScreen}
+        options={{
+          tabBarLabel: 'Explore Screen',
+        }}
+      />
+    </topTab.Navigator>
+  );
+};
 
- export default App;
+let tabBottomFontSize = 20;
+
+if (PixelRatio.get() <= 2) {
+  tabBottomFontSize = 40;
+}
+
+const BottomTabStack = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="HomeScreen"
+      tabBarOptions={{
+        activeTintColor: 'blue',
+        inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: '#e0e0e0',
+        },
+        labelStyle: {
+          textAlign: 'center',
+          fontSize: tabBottomFontSize,
+        },
+      }}>
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home Screen',
+        }}
+      />
+      <Tab.Screen
+        name="ExploreScreen"
+        component={ExploreScreen}
+        options={{
+          tabBarLabel: 'Explore Screen',
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+        initialRouteName="HomeScreenStack"
+        drawerContentOptions={{
+          activeTintColor: '#e91e63',
+          itemStyle: {marginVertical: 5},
+        }}>
+        <Drawer.Screen
+          name="ProfileScreen"
+          options={{drawerLabel: 'Profile Screen Option'}}
+          component={ProfileScreen}
+        />
+        <Drawer.Screen
+          name="HomeScreenStack"
+          options={{drawerLabel: 'Home Screen Option'}}
+          component={HomeScreenStack}
+        />
+        <Drawer.Screen
+          name="SettingScreenStack"
+          options={{drawerLabel: 'Setting Screen Option'}}
+          component={SettingScreenStack}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
