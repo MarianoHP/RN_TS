@@ -3,11 +3,9 @@ import {View, Text, StyleSheet, PixelRatio, TouchableOpacity} from 'react-native
 
 export default class Profile extends React.Component {
   renderTouchableOpacity = (pressHandler: any, text: string) => (
-    <View style={styles.button}>
-      <TouchableOpacity onPress={pressHandler}>
-        <Text style={styles.buttonText}>{text}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.button} onPress={pressHandler}>
+      <Text style={styles.buttonText}>{text}</Text>
+    </TouchableOpacity>
   );
 
   getView = (navigation: any) => (
