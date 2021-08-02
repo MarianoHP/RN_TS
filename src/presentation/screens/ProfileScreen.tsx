@@ -55,7 +55,7 @@ export default class Profile extends React.Component {
       <View style={styles.mainContainer}>
           <View style={styles.titleContainer}>
               <Text style={styles.titleText}>Profile Screen</Text>
-              {this.renderTouchableOpacity(() => navigation.goBack(), 'Go Back')}
+              {this.renderTouchableOpacity(() => navigation.navigate('HomeScreenStack'), 'Go Home')}
           </View>
 
           <Text style={styles.contentText}>Studying Navigation</Text>
