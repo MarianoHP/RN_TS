@@ -30,17 +30,16 @@ const BottomTabStack = () => {
     return (
         <Tab.Navigator
             initialRouteName="HomeScreen"
-            tabBarOptions={{
-                activeTintColor: 'blue',
-                inactiveTintColor: 'gray',
-                style: {
-                    backgroundColor: '#e0e0e0',
-                },
-                labelStyle: {
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: 'blue',
+                tabBarInactiveTintColor: 'gray',
+                tabBarLabelStyle: {
                     textAlign: 'center',
                     fontSize: tabBottomFontSize,
                 },
-            }}>
+            }}
+        >
             <Tab.Screen
                 name="HomeScreen"
                 component={HomeScreen}
@@ -83,13 +82,16 @@ const TopTabStack = () => {
 const HomeScreenStack = () => {
     return (
         <Stack.Navigator initialRouteName="HomeScreen">
-            <Stack.Screen name="BottomTabStack" component={BottomTabStack} options={{headerShown: false}} />
+            <Stack.Screen
+                name="BottomTabStack"
+                component={BottomTabStack}
+                options={{headerShown: false}}
+            />
             <Stack.Screen
                 name="TopTabStack"
                 component={TopTabStack}
                 options={{
                     headerTitle: 'Top Tap Example',
-                    headerShown: true,
                 }}
             />
             <Stack.Screen
@@ -97,7 +99,6 @@ const HomeScreenStack = () => {
                 component={RandomScreen}
                 options={{
                     headerTitle: 'Top Tap Example',
-                    headerShown: true,
                 }}
             />
         </Stack.Navigator>
@@ -106,8 +107,14 @@ const HomeScreenStack = () => {
 
 const SettingScreenStack = () => {
     return (
-        <Stack.Navigator initialRouteName="SettingScreen">
-            <Stack.Screen name="SettingScreen" component={SettingScreen} options={{headerShown: false}} />
+        <Stack.Navigator
+            initialRouteName="SettingScreen"
+        >
+            <Stack.Screen
+                name="SettingScreen"
+                component={SettingScreen}
+                options={{headerShown: false}}
+            />
         </Stack.Navigator>
     );
 };
@@ -117,10 +124,11 @@ function App() {
         <NavigationContainer>
             <Drawer.Navigator
                 initialRouteName="HomeScreenStack"
-                drawerContentOptions={{
-                    activeTintColor: '#e91e63',
-                    itemStyle: {marginVertical: 5},
-                }}>
+                screenOptions={{
+                    headerShown: false,
+                    drawerActiveTintColor: '#e91e63',
+                }}
+            >
                 <Drawer.Screen
                     name="ProfileScreen"
                     options={{drawerLabel: 'Profile Screen Option'}}
